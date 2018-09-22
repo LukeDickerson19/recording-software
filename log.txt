@@ -1,0 +1,336 @@
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./audio_files
+or type CANCEL to cancel opening
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./audio_files
+or type CANCEL to cancel opening
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./audio_files
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+0	recordings
+1	__pycache__
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+0	recordings
+1	__pycache__
+invalid input
+invalid input
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+0	r2
+1	r3
+2	r1
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Selected ...
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Selected ...
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Selected ...
+<generator object walk at 0x7f8ba5ef6200>
+<enumerate object at 0x7f8ba37f8798>
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Selected ...
+[('./recordings', ['r2', 'r3', 'r1'], []), ('./recordings/r2', [], []), ('./recordings/r3', [], []), ('./recordings/r1', [], [])]
+[(0, 'r2'), (1, 'r3'), (2, 'r1')]
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+invalid input
+invalid input
+invalid input
+invalid input
+invalid input
+invalid input
+invalid input
+invalid input
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+invalid input
+invalid input
+invalid input
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+invalid input
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Selected ...
+path = ./recordingsr1
+Failed to Open Recording
+Failed to open recording at: ./recordings
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+invalid input
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+selected r3
+Opened r3
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+selected r3
+Opened r3
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Opened r1
+Name:	r1
+Path:	./recordings/
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Opened Recording
+Name:	r3
+Path:	./recordings/
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Opened Recording
+Name:	r3
+Path:	./recordings/
+Tracks:
+no tracks
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Opened Recording
+Name:	r3
+Path:	./recordings/
+Tracks:
+no tracks
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+pick a number 1 through 3 you fucking idiot
+invalid input
+invalid input
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Opened Recording
+Name:	r2
+Path:	./recordings/
+Tracks:
+no tracks
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Opened Recording
+Name:	r3
+Path:	./recordings/
+Tracks:
+no tracks
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+Opened Recording
+Name:	r1
+Path:	./recordings/
+Tracks:
+no tracks
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+path '4' does not exist
+type path of recording to open
+or press enter for DEFAULT_RECORD_PATH: ./recordings/
+or type CANCEL to cancel opening
+Select the recording to open by
+typing the number in front of it
+1	r2
+2	r3
+3	r1
+pick a number 1 through 3 you fucking idiot
+invalid input
+pick a number 1 through 3 you fucking idiot
+invalid input
+invalid input
+Opened Recording
+Name:	r2
+Path:	./recordings/
+Tracks:
+no tracks
