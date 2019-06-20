@@ -9,7 +9,21 @@ from constants import *
 
     TO DO:
 
+        upgrade to newer version:
+            python3 -m pip install sounddevice --upgrade
+                source: https://python-sounddevice.readthedocs.io/en/0.3.13/installation.html
+
+        check these out:
+            https://realpython.com/playing-and-recording-sound-python/
+            https://www.swharden.com/wp/2016-07-19-realtime-audio-visualization-in-python/
+                found from here: https://stackoverflow.com/questions/48653745/continuesly-streaming-audio-signal-real-time-infinitely-python
+
+            questions:
+                how do you stop the record_unlimited() function?
+                does pyaudio allow simultanious recording and playback?
+
         make it so you can save a recording file in rec_unlimited
+
 
         change record unlimited to have a different key board command so the program doesnt end
         when you finish a recording
@@ -29,7 +43,7 @@ from constants import *
         don't offer, or always have issues trying.
 
     USAGE:
-    
+
         run program with driver.py
 
         press r to record
@@ -46,7 +60,7 @@ from constants import *
     SOURCES:
 
         sounddevice - used to record audio with python
-        https://python-sounddevice.readthedocs.io/en/0.3.12/
+        https://python-sounddevice.readthedocs.io/en/0.3.13/
 
             questions:
 
@@ -56,13 +70,13 @@ from constants import *
                     myrecording = sd.rec(int(duration * fs), samplerate=fs, channels=2)
 
                     Q: What is channels?
-                    A: 
+                    A:
 
                 Q: how do i stop recording?
                 A:
 
                 Q: how do i play a recording?
-                A: 
+                A:
 
     IDEAS:
 
@@ -187,7 +201,7 @@ class Recording(object):
         name = self.name if name is None else name
         path = self.path if path is None else path
 
-        self.save(name=name, path=path) 
+        self.save(name=name, path=path)
 
     # return True/False if this recording has been saved yet
     def saved(self):
@@ -269,7 +283,7 @@ class Track(object):
 
     def __init__(self, name):
         self.audio = None
-        self.name = name
+        self.name  = name
         self.muted = False
 
     def empty(self):
