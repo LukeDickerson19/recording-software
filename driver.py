@@ -24,6 +24,9 @@ from constants import *
 
                 guitar effects in python!
                 http://www.matthieuamiguet.ch/blog/diy-guitar-effects-python
+                https://github.com/Souloist/audio-effects
+                    this one uses pyaudio!
+                    ... but does it have Distortion, and can you make custom effects?
 
             questions:
                 how do you stop the record_unlimited() function?
