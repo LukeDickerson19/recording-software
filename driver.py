@@ -16,6 +16,8 @@ from constants import *
 
         create play/pause commands
 
+        make it so each track and recording has a notes section
+
 
 
 
