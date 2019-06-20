@@ -9,6 +9,10 @@ from constants import *
 
     TO DO:
 
+        perhaps this could lead to a Audio Software Engineer position w/ Warner Music
+            Do they have those positions?
+            Do they allow you to work remotely?
+
         upgrade to newer version:
             python3 -m pip install sounddevice --upgrade
                 source: https://python-sounddevice.readthedocs.io/en/0.3.13/installation.html
@@ -17,6 +21,9 @@ from constants import *
             https://realpython.com/playing-and-recording-sound-python/
             https://www.swharden.com/wp/2016-07-19-realtime-audio-visualization-in-python/
                 found from here: https://stackoverflow.com/questions/48653745/continuesly-streaming-audio-signal-real-time-infinitely-python
+
+                guitar effects in python!
+                http://www.matthieuamiguet.ch/blog/diy-guitar-effects-python
 
             questions:
                 how do you stop the record_unlimited() function?
