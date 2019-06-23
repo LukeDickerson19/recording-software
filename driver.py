@@ -19,14 +19,15 @@ from constants import *
 
         check these out:
             https://realpython.com/playing-and-recording-sound-python/
+
             https://www.swharden.com/wp/2016-07-19-realtime-audio-visualization-in-python/
                 found from here: https://stackoverflow.com/questions/48653745/continuesly-streaming-audio-signal-real-time-infinitely-python
 
-                guitar effects in python!
-                http://www.matthieuamiguet.ch/blog/diy-guitar-effects-python
-                https://github.com/Souloist/audio-effects
-                    this one uses pyaudio!
-                    ... but does it have Distortion, and can you make custom effects?
+            guitar effects in python!
+            http://www.matthieuamiguet.ch/blog/diy-guitar-effects-python
+            https://github.com/Souloist/audio-effects
+                this one uses pyaudio!
+                ... but does it have Distortion, and can you make custom effects?
 
             questions:
                 how do you stop the record_unlimited() function?
