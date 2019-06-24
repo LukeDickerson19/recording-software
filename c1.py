@@ -2,6 +2,8 @@
 
     TO DO:
 
+        get distortion effect
+
         fix it so sound comes from both headphone ears
             why is the data in the right headphone static?
 
@@ -9,7 +11,7 @@
         make the axes show the duration over time
             (maybe a second)
 
-        the frequency chart
+        the frequency chart (aka spectrogram)
 
         maybe make a backup of all this first
 
@@ -20,6 +22,22 @@
                     frequency on the y axis
 
                 see spectrogram.py
+
+
+
+    THOUGHTS:
+
+        I'm worried that:
+
+            when I try to create/copy-in effects for this
+            it will increase the latency to much
+                does numpy use C in its backend? 
+
+            it won't be able to record 2 inputs and output them simulatniously
+
+        It would be cool to create an effect like the piano pedal where you can hold it down
+        and whatever notes are played when its held down are elongated even when you stop
+        holding the note
 
     '''
 
@@ -60,6 +78,10 @@ def audio_callback(indata, outdata, frames, time, status):
     # print('outdata')
     # print(outdata.shape)
     # print(outdata)
+
+    # # recording eventually gets laggy this way
+    # global all_data
+    # all_data = np.concatenate((all_data, outdata))
 
     # # used to verify outdata still has same precision indata has
     # print(np.format_float_scientific(outdata[0][0], unique=False, precision=15))
@@ -109,8 +131,5 @@ ani = FuncAnimation(fig, update_plot, interval=INTERVAL, blit=True)
 with s:
     plt.show()
 
-import soundfile as sf
-# for i in range(all_data.shape[0]):
-#     print(all_data[i])
-
-sf.write(wav2, all_data, SAMPLERATE)
+# import soundfile as sf
+# sf.write(wav2, all_data, SAMPLERATE)
