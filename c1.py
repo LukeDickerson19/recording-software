@@ -2,27 +2,32 @@
 
     TO DO:
 
-        get distortion effect
+        NOW:
 
-        fix it so sound comes from both headphone ears
-            why is the data in the right headphone static?
+            get distortion effect
 
-        plot the left and right head phones over time 
-        make the axes show the duration over time
-            (maybe a second)
+            fix it so sound comes from both headphone ears
+                why is the data in the right headphone static?
 
-        the frequency chart (aka spectrogram)
+            plot the left and right head phones over time
+            make the axes show the duration over time
+                (maybe a second)
 
-        maybe make a backup of all this first
+            the frequency chart (aka spectrogram)
 
-        figure out what 'data' numpy array represents
-            plot (net) volume over time
-            frequency
-                make each frequency appear on a plot that has
-                    frequency on the y axis
+            maybe make a backup of all this first
 
-                see spectrogram.py
+            figure out what 'data' numpy array represents
+                plot (net) volume over time
+                frequency
+                    make each frequency appear on a plot that has
+                        frequency on the y axis
 
+                    see spectrogram.py
+
+        LONG TERM:
+
+            set up pedal
 
 
     THOUGHTS:
@@ -31,13 +36,21 @@
 
             when I try to create/copy-in effects for this
             it will increase the latency to much
-                does numpy use C in its backend? 
+                does numpy use C in its backend?
 
             it won't be able to record 2 inputs and output them simulatniously
 
         It would be cool to create an effect like the piano pedal where you can hold it down
         and whatever notes are played when its held down are elongated even when you stop
         holding the note
+
+        It would be cool if the Program could figure out what time signature you're playing
+        in by simply listening to you play
+            as a musician your time signature is going to fluctuate slightly ...
+            and you could set it to either
+
+        It would be cool if you could pre-set the algorithm to apply various
+        effects at various points in the song (identified with AI)
 
     '''
 
