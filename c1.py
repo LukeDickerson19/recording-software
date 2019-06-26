@@ -67,6 +67,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 np.set_printoptions(threshold=10)
 import sounddevice as sd
+sd.default.latency = 'low'
+plotdata = np.zeros(128)
 
 SAMPLERATE = 44100
 WINDOW = 200
@@ -74,10 +76,8 @@ DOWNSAMPLE = 10
 INTERVAL = 30
 CHANNELS = [1]
 length = int(WINDOW * SAMPLERATE / (1000 * DOWNSAMPLE))
-# plotdata = np.zeros((length, len(CHANNELS)))
-plotdata = np.zeros(512)
 # print(plotdata)
-# print(len(plotdata))
+# print(plotdata.shape)
 # sys.exit()
 
 
@@ -135,6 +135,7 @@ def audio_callback(indata, outdata, frames, time, status):
                 indata[:,0][:,np.newaxis],
                 a_min=-threshold, a_max=threshold),
             2, 1)
+    # print(outdata[:,0][:,np.newaxis].shape)
 
     # soft clipping
     # "same as hard clippling but with smooth curve instead" (paraphrased)
