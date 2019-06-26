@@ -8,6 +8,8 @@
 
             rename a,b,c:1,2 files to make more sense
 
+            put distortion options outside of callback function
+
             update backup
 
             push it all to github
@@ -39,6 +41,9 @@
 
 
             right now sd.default.latency = 'low' in order to decrease latency.
+
+                found here: https://stackoverflow.com/questions/39990274/too-high-latency-while-trying-to-manipulate-sound-arrays-using-sounddevice-in-py
+
                 it does this by decreasing the length of the numpy array 'indata' (from 512 to 128)
                 which decreases the quality of the sound (idk why)
 
