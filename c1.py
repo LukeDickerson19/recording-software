@@ -51,8 +51,14 @@
                 Possible solutions are:
 
                     use:
-                        multiprocessing or async-io to do more shit in parallel hopefully
+                        multiprocessing/async-io/etc to do more shit in parallel/concurrently
                             https://realpython.com/async-io-python/#the-10000-foot-view-of-async-io
+                            https://docs.python.org/3.4/library/multiprocessing.html?highlight=process
+                            https://realpython.com/python-concurrency/
+
+                            i need to find some way to determine whihc parts of the code are currently
+                            taking how long and what is waiting on what to run, ect. before I can have
+                            any idea how to improve it this way
 
                         research sd.default.latency (maybe theres a way to set it to 'medium low' or something to put it at 256, maybe 256 wont have noticable latency and quality will be pretty good too)
 
