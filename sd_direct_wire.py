@@ -14,6 +14,7 @@
                 try a python list.append()
                 if that doesn't work (or affets latency in any noticable way) use a linked list
 
+            also make plot be over time
 
 
         LONG TERM:
@@ -134,14 +135,18 @@ plotdata = np.zeros(128)
 # print(plotdata.shape)
 # sys.exit()
 
+
+
 SAMPLERATE = 44100
+
 
 
 # mapping = [c - 1 for c in CHANNELS]  # Channel numbers start with 1
 q = queue.Queue()
 
-wav2 = 'wav2.wav'
-all_data = np.array([[0.0, 0.0]])
+# used for recording all the data
+# all_data = np.array([[0.0, 0.0]])
+all_data = []
 
 cubic = lambda x : x - (1/3)*(x**3)
 
@@ -226,21 +231,15 @@ def audio_callback(indata, outdata, frames, time, status):
     #         2, 1)
     # # print(outdata[:,0][:,np.newaxis].shape)
 
-
+    all_data.append(outdata)
 
     # print('outdata')
     # print(outdata.shape)
     # print(outdata)
 
-    # # recording eventually gets laggy this way
-    # global all_data
-    # all_data = np.concatenate((all_data, outdata))
-
     # # used to verify outdata still has same precision indata has
     # print(np.format_float_scientific(outdata[0][0], unique=False, precision=15))
 
-    # global all_data
-    # all_data = np.concatenate((all_data, outdata))
     # Fancy indexing with mapping creates a (necessary!) copy:
     # q.put(outdata[::DOWNSAMPLE, mapping])
     q.put(outdata[:,0][:,np.newaxis])
@@ -271,6 +270,16 @@ def update_plot(frame):
     #     # line.set_ydata(plotdata[:, column])
     #     line.set_ydata(plotdata)
     plotdata = q.get_nowait()
+
+    # print(outdata.shape)
+
+    # recording eventually gets laggy this way
+    # global all_data
+    # all_data = np.concatenate((all_data, outdata))
+    # all_data += outdata.tolist()
+    # print(len(all_data))
+
+
     for column, line in enumerate(lines):
         line.set_ydata(plotdata)
     return lines
@@ -286,14 +295,17 @@ lines = ax.plot(plotdata)
 # ax.set_ylim((-10.0, 10.0))
 ax.set_ylim((-0.5, 0.5))
 ax.yaxis.grid(True)
-ani = FuncAnimation(fig, update_plot, interval=30, blit=True)
+ani = FuncAnimation(fig, update_plot, interval=50, blit=True)
 
 with s:
+    # input()
     plt.show()
 
+
+# save recorde data to .wav and .txt files
+wav2 = 'wav2.wav'
 import soundfile as sf
 sf.write(wav2, all_data, SAMPLERATE)
-
 open('txt2.txt', 'w').close()
 f = open('txt2.txt', 'w')
 for i, v in enumerate(all_data):
