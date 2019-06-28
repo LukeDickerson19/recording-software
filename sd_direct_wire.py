@@ -5,16 +5,28 @@
         NOW:
 
             find a way to record
-                that doesn't create lag over time
-                np.concatinate() didn't work
-                vvv    this explains why    vvv
-                https://stackoverflow.com/questions/38470264/numpy-concatenate-is-slow-any-alternative-approach
-                its because its copying over the whole array each time
-                    in what other senarios is numpy copying shit unneccessarily?
-                try a python list.append()
-                if that doesn't work (or affects latency in any noticable way) use a linked list
 
                 test current way of recording before you get into CLI stuff
+                    current way of recording doesn't have lag which is good
+                    it does sound weird in the .wav file though
+                        slightly mitigated with amplification
+                    the playback with numpy arrays sounds the same though
+                        see test_wav_to_sd_outputstream.py
+                        can multiple streams go to the same output to play multiple things
+                        through the headphones?
+                            ... if not, could we sum the numpy arrays and
+                            ... give that to one stream and send that to
+                            ... the output?
+
+                I should probably get the comp. Mic input set up before CLI stuff
+                    need to be able to sing and play guitar simultaniously
+                        hear both through the headphones
+                        record both
+                            in 2 separate files and 1 combined file
+                        hopefully the mic won't pick up the guitar to much ...
+                            ... if it does, theres mics you can buy for <= $10
+                                    https://www.google.com/search?tbm=shop&q=microphone&tbs=vw:l,mr:1,root_cat:530633,cat:234,price:1,ppr_max:90,init_ar:SgVKAwjqAUoHsgQECMmxIA%3D%3D&sa=X&ved=0ahUKEwiV48rbwovjAhVXOs0KHfDFBU4QvSsIrQMoAA&biw=1299&bih=641
+
 
                 i want to be able to say:
                     ns <name (string)> = new song w/ <name>
@@ -113,6 +125,14 @@
                 and see their difference, maybe they're not that different and you just need to
                 randomly change the right one a bit from the left to get rid of that chorus sound
 
+                This is why
+                https://support.focusrite.com/hc/en-gb/articles/206849779-Why-is-my-microphone-guitar-only-on-the-left-
+                https://electronics.stackexchange.com/questions/241610/mono-jack-output-to-stereo-headphones-how-to-send-the-mono-signal-to-both-side
+                https://www.reddit.com/r/Advice/comments/470w29/how_do_i_convert_mono_output_to_stereo_so_that_i/
+                    this one recommended this:
+                        https://www.radioshack.com/products/radioshack-1-8-stereo-jack-to-1-4-mono-plug-adapter#.VstnrDu6EAM.mailto
+                    but i think thats what I have?
+                        reddit also recommeded a "Y Cord" (aka cheap adapter)
 
     THOUGHTS:
 
@@ -235,10 +255,10 @@ def audio_callback(indata, outdata, frames, time, status):
     outdata[:] = amplitude * \
         np.repeat(
             np.clip(
-                indata[:,0][:,np.newaxis],
+                indata[:,0],
                 a_min=-threshold,
                 a_max=threshold,
-                out=indata[:,0][:,np.newaxis]),
+                out=indata[:,0])[:,np.newaxis],
             2, 1)
     # print(outdata[:,0][:,np.newaxis].shape)
 
@@ -358,23 +378,22 @@ with s:
     #             PLAYING = False
 
 # save recorded data to .wav and .txt files
+if RECORDING:
 
-all_data2 = np.array([[0.0, 0.0]])
-all_data2 = all_data[0]
-for v in all_data[1:]:
-    all_data2 = np.concatenate((all_data2, 10 * v))
-wav2 = 'wav2.wav'
-import soundfile as sf
-sf.write(wav2, all_data2, SAMPLERATE)
+    all_data = 20 * np.reshape(
+        all_data,
+        (len(all_data)*len(all_data[0]), 2))
+    wav2 = 'wav2.wav'
+    import soundfile as sf
+    sf.write(wav2, all_data, SAMPLERATE)
 
-fn = 'txt2.txt'
-open(fn, 'w').close() # clear file
-f = open(fn, 'w')
-for i, v in enumerate(all_data2):
-    for row in v:
+    fn = 'txt2.txt'  # this is just to compare .wav to raw numpy array
+    open(fn, 'w').close() # clear file
+    f = open(fn, 'w')
+    for i, v in enumerate(all_data):
         f.write('%s\n' % v)
-    if i > 100:
-        break
+        if i > 100:
+            break
 
 
 
