@@ -12,7 +12,40 @@
                 its because its copying over the whole array each time
                     in what other senarios is numpy copying shit unneccessarily?
                 try a python list.append()
-                if that doesn't work (or affets latency in any noticable way) use a linked list
+                if that doesn't work (or affects latency in any noticable way) use a linked list
+
+                test current way of recording before you get into CLI stuff
+
+                i want to be able to say:
+                    ns <name (string)> = new song w/ <name>
+                    os <name (string)> = open song w/ <name>
+                    vs = view songs
+                    nt <name(s) (string)> = new track(s) w/ name(s) = <name(s)>
+                    dt <name(s) (string)> = delete track w/ name(s) = <name(s)>
+                    ti <input_device_id (int)>  = set track input device
+                    to <output_device_id (int)> = set track output device (can sounddevice have multiple output devices?)
+                    vd = view all i/o devices
+                    mt <name(s) (string)> <> = mute track(s) on specified output devices
+                        by default all tracks are played
+                    vt <name(s) (string)> --verbose = view track(s) w/ name(s) if no names provoded, default is to view all tracks
+                        name
+                        input_device_id
+                        list of output_device_ids it will play on
+                        list of output_device_ids its muted on
+                        effects put on it
+                        recording(s) start_time, end_time, duration
+                    rt (<name (string)> <start_time (int)> <end_time (int)>)(s) = record on track(s) w/ <name(s)>
+                        if no names provided, record on all tracks
+                        start_time default = 0.000
+                        end_time default is infinity
+                        during recording, all tracks will be audible unless they are muted
+
+                    help = display all these commands
+
+                    it would also be great if all this UI stuff was independent of sounddevice so I could potentially switch to another library later
+
+                    a.py shows how to print over the current line
+                        might be useful to make a very simple CLI when running this script
 
             also make plot be over time
 
@@ -139,6 +172,7 @@ plotdata = np.zeros(128)
 
 SAMPLERATE = 44100
 
+RECORDING = False
 
 
 # mapping = [c - 1 for c in CHANNELS]  # Channel numbers start with 1
@@ -231,7 +265,8 @@ def audio_callback(indata, outdata, frames, time, status):
     #         2, 1)
     # # print(outdata[:,0][:,np.newaxis].shape)
 
-    all_data.append(outdata)
+    if RECORDING:
+        all_data.append(outdata)
 
     # print('outdata')
     # print(outdata.shape)
@@ -299,16 +334,37 @@ ani = FuncAnimation(fig, update_plot, interval=50, blit=True)
 
 with s:
     # input()
-    plt.show()
+    # plt.show()
+    while True:
+        user_input = input()
+        if user_input == 'r':
+            if RECORDING:
+                RECORDING = False
+            else:
+                all_data = []
+                RECORDING = True
+        if user_input == 'p':
+            if PLAYING:
+                PLAYING = False
 
 
-# save recorde data to .wav and .txt files
+# save recorded data to .wav and .txt files
+
+all_data2 = np.array([[0.0, 0.0]])
+for v in all_data:
+    all_data2 = np.concatenate(all_data2, v)
 wav2 = 'wav2.wav'
 import soundfile as sf
 sf.write(wav2, all_data, SAMPLERATE)
-open('txt2.txt', 'w').close()
-f = open('txt2.txt', 'w')
+
+fn = 'txt2.txt'
+open(fn, 'w').close() # clear file
+f = open(fn, 'w')
 for i, v in enumerate(all_data):
-    f.write('%s\n' % v)
+    for row in v:
+        f.write('%s\n' % v)
     if i > 100:
         break
+
+
+
