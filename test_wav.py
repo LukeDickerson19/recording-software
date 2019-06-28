@@ -5,9 +5,9 @@ import numpy as np
 np.set_printoptions(threshold=sys.maxsize)
 
 
-
-# filename = 'classical_music.wav'
 filename = 'wav2.wav'
+# filename = 'classical_music.wav'
+# filename = 'classical_music2.wav'
 
 # Extract data and sampling rate from file
 data, fs = sf.read(filename, dtype='float32')
@@ -19,6 +19,11 @@ print(fs)
 print('data:')
 print(type(data))
 print(data.shape)
+np.set_printoptions(threshold=100)
+# for row in data:
+# 	print(row)
+
+# sf.write('classical_music2.wav', data, fs)
 
 # # this was originally here to test if copying the left
 # # data into the right data could make sounds come from

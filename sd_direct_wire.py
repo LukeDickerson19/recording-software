@@ -156,6 +156,7 @@
 
 import queue
 import sys
+import timeit
 
 from matplotlib.animation import FuncAnimation
 import matplotlib.pyplot as plt
@@ -172,7 +173,7 @@ plotdata = np.zeros(128)
 
 SAMPLERATE = 44100
 
-RECORDING = False
+RECORDING = True
 
 
 # mapping = [c - 1 for c in CHANNELS]  # Channel numbers start with 1
@@ -186,6 +187,13 @@ cubic = lambda x : x - (1/3)*(x**3)
 
 alpha = 5000
 arctan = lambda x : (2 / np.pi) * np.arctan(alpha * x)
+
+# https://dsp.stackexchange.com/questions/13142/digital-distortion-effect-algorithm
+f = lambda x : \
+    np.where(
+        x > 0,
+        1.0 - np.exp(-x),
+        -1.0 + np.exp(x))
 
 # def audio_callback(indata, frames, time, status):
 def audio_callback(indata, outdata, frames, time, status):
@@ -228,7 +236,9 @@ def audio_callback(indata, outdata, frames, time, status):
         np.repeat(
             np.clip(
                 indata[:,0][:,np.newaxis],
-                a_min=-threshold, a_max=threshold),
+                a_min=-threshold,
+                a_max=threshold,
+                out=indata[:,0][:,np.newaxis]),
             2, 1)
     # print(outdata[:,0][:,np.newaxis].shape)
 
@@ -238,15 +248,15 @@ def audio_callback(indata, outdata, frames, time, status):
     # # arc tan function: output = 2 / pi * arctan(alpha*input)
     # #     "alpha" values typically range from 1 to 10. If alpha is way more than 10, softclippling approaches infinite clipping
     # #    - https://www.hackaudio.com/digital-signal-processing/distortion-effects/soft-clipping/
-    # amplitude = 1.0
+    # amplitude = 100.0
     # left_indata = indata[:,0][:,np.newaxis]
-    # # print(f(left_indata))
     # outdata[:] = amplitude * \
     #     np.repeat(
     #         # cubic(left_indata),
-    #         arctan(left_indata),
+    #         # arctan(left_indata),
+    #         f(left_indata),
     #         2, 1)
-
+    
 
     # # bit crushing
     # # "round signal to -1, 0, or 1 (or any combo you want)" (para-phrased)
@@ -266,7 +276,7 @@ def audio_callback(indata, outdata, frames, time, status):
     # # print(outdata[:,0][:,np.newaxis].shape)
 
     if RECORDING:
-        all_data.append(outdata)
+        all_data.append(outdata.copy())
 
     # print('outdata')
     # print(outdata.shape)
@@ -275,49 +285,49 @@ def audio_callback(indata, outdata, frames, time, status):
     # # used to verify outdata still has same precision indata has
     # print(np.format_float_scientific(outdata[0][0], unique=False, precision=15))
 
-    # Fancy indexing with mapping creates a (necessary!) copy:
-    # q.put(outdata[::DOWNSAMPLE, mapping])
-    q.put(outdata[:,0][:,np.newaxis])
+    # # Fancy indexing with mapping creates a (necessary!) copy:
+    # # q.put(outdata[::DOWNSAMPLE, mapping])
+    # q.put(outdata[:,0][:,np.newaxis])
 
-def update_plot(frame):
-    """This is called by matplotlib for each plot update.
+# def update_plot(frame):
+#     """This is called by matplotlib for each plot update.
 
-    Typically, audio callbacks happen more frequently than plot updates,
-    therefore the queue tends to contain multiple blocks of audio data.
+#     Typically, audio callbacks happen more frequently than plot updates,
+#     therefore the queue tends to contain multiple blocks of audio data.
 
-    """
-    # global plotdata
-    # while True:
-    #     try:
-    #         data = q.get_nowait()
-    #     except queue.Empty:
-    #         break
-    #     # print(data.shape)
-    #     # print(data)
-    #     # print()
+#     """
+#     # global plotdata
+#     # while True:
+#     #     try:
+#     #         data = q.get_nowait()
+#     #     except queue.Empty:
+#     #         break
+#     #     # print(data.shape)
+#     #     # print(data)
+#     #     # print()
 
-    #     # shift = len(data)
-    #     # plotdata = np.roll(plotdata, -shift, axis=0)
-    #     # plotdata[-shift:, :] = data
+#     #     # shift = len(data)
+#     #     # plotdata = np.roll(plotdata, -shift, axis=0)
+#     #     # plotdata[-shift:, :] = data
 
-    #     plotdata = data
-    # for column, line in enumerate(lines):
-    #     # line.set_ydata(plotdata[:, column])
-    #     line.set_ydata(plotdata)
-    plotdata = q.get_nowait()
+#     #     plotdata = data
+#     # for column, line in enumerate(lines):
+#     #     # line.set_ydata(plotdata[:, column])
+#     #     line.set_ydata(plotdata)
+#     plotdata = q.get_nowait()
 
-    # print(outdata.shape)
+#     # print(outdata.shape)
 
-    # recording eventually gets laggy this way
-    # global all_data
-    # all_data = np.concatenate((all_data, outdata))
-    # all_data += outdata.tolist()
-    # print(len(all_data))
+#     # recording eventually gets laggy this way
+#     # global all_data
+#     # all_data = np.concatenate((all_data, outdata))
+#     # all_data += outdata.tolist()
+#     # print(len(all_data))
 
 
-    for column, line in enumerate(lines):
-        line.set_ydata(plotdata)
-    return lines
+#     for column, line in enumerate(lines):
+#         line.set_ydata(plotdata)
+#     return lines
 
 s = sd.Stream(
     device=(4, 4),
@@ -325,42 +335,42 @@ s = sd.Stream(
     channels=2,
     callback=audio_callback)
 
-fig, ax = plt.subplots()
-lines = ax.plot(plotdata)
-# ax.set_ylim((-10.0, 10.0))
-ax.set_ylim((-0.5, 0.5))
-ax.yaxis.grid(True)
-ani = FuncAnimation(fig, update_plot, interval=50, blit=True)
+# fig, ax = plt.subplots()
+# lines = ax.plot(plotdata)
+# # ax.set_ylim((-10.0, 10.0))
+# ax.set_ylim((-0.5, 0.5))
+# ax.yaxis.grid(True)
+# ani = FuncAnimation(fig, update_plot, interval=50, blit=True)
 
 with s:
-    # input()
+    input()
     # plt.show()
-    while True:
-        user_input = input()
-        if user_input == 'r':
-            if RECORDING:
-                RECORDING = False
-            else:
-                all_data = []
-                RECORDING = True
-        if user_input == 'p':
-            if PLAYING:
-                PLAYING = False
-
+    # while True:
+    #     user_input = input()
+    #     if user_input == 'r':
+    #         if RECORDING:
+    #             RECORDING = False
+    #         else:
+    #             all_data = []
+    #             RECORDING = True
+    #     if user_input == 'p':
+    #         if PLAYING:
+    #             PLAYING = False
 
 # save recorded data to .wav and .txt files
 
 all_data2 = np.array([[0.0, 0.0]])
-for v in all_data:
-    all_data2 = np.concatenate(all_data2, v)
+all_data2 = all_data[0]
+for v in all_data[1:]:
+    all_data2 = np.concatenate((all_data2, 10 * v))
 wav2 = 'wav2.wav'
 import soundfile as sf
-sf.write(wav2, all_data, SAMPLERATE)
+sf.write(wav2, all_data2, SAMPLERATE)
 
 fn = 'txt2.txt'
 open(fn, 'w').close() # clear file
 f = open(fn, 'w')
-for i, v in enumerate(all_data):
+for i, v in enumerate(all_data2):
     for row in v:
         f.write('%s\n' % v)
     if i > 100:

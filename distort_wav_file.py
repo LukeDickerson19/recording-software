@@ -61,42 +61,36 @@ if __name__ == '__main__':
 
 		numCH1 = struct.unpack("<hxx", sample)[0]
 		numCH2 = struct.unpack("<xxh", sample)[0]
-
 		if DEBUG: print('numCH1 = %s' % numCH1)
 		if DEBUG: print('numCH2 = %s' % numCH2)
 
 		# convert to float for division
 		floatCH1 = float(numCH1)
 		floatCH2 = float(numCH2)
-
 		if DEBUG: print('numCH1 = %s' % numCH1)
 		if DEBUG: print('numCH2 = %s' % numCH2)
 
 		# normalize
 		normCH1 = floatCH1 / 100
 		normCH2 = floatCH2 / 100
-
 		if DEBUG: print('normCH1 = %s' % normCH1)
 		if DEBUG: print('normCH2 = %s' % normCH2)
 
 		# compute arctan for distortion
 		distCH1 = math.atan(normCH1)
 		distCH2 = math.atan(normCH2)
-
 		if DEBUG: print('distCH1 = %s' % distCH1)
 		if DEBUG: print('distCH2 = %s' % distCH2)
 
 		# convert back to INT and amplify
 		intDistCH1 = int(distCH1 * 1000)
 		intDistCH2 = int(distCH2 * 1000)
-
 		if DEBUG: print('intDistCH1 = %s' % intDistCH1)
 		if DEBUG: print('intDistCH2 = %s' % intDistCH2)
 
 		# pack into WAVE format
 		packCH1 = struct.pack('h' , intDistCH1)
 		packCH2 = struct.pack('h', intDistCH2)
-
 		if DEBUG: print('packCH1 = %s' % packCH1)
 		if DEBUG: print('packCH2 = %s' % packCH2)
 
