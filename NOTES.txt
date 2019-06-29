@@ -1,0 +1,184 @@
+
+TO DO:
+
+    NOW:
+
+        Figure out how (in pyo) to:
+            input from the computer's mic simultanious with input from scarlett
+            input from distorition pedal
+                either
+                    create another pyo object of some kind for this
+                    or have a separate pyo object for distortion and one for no distortion
+                OOOOORRRR set the distortion value to the value of the pedal!
+            record to an audio file
+                does the recording sound the same as live?
+            listen through 2 pair of headphones
+
+
+        find a way to record
+
+            test current way of recording before you get into CLI stuff
+                current way of recording doesn't have lag which is good
+                it does sound weird in the .wav file though
+                    slightly mitigated with amplification
+                the playback with numpy arrays sounds the same though
+                    see test_wav_to_sd_outputstream.py
+                    can multiple streams go to the same output to play multiple things
+                    through the headphones?
+                        ... if not, could we sum the numpy arrays and
+                        ... give that to one stream and send that to
+                        ... the output?
+
+            I should probably get the comp. Mic input set up before CLI stuff
+                need to be able to sing and play guitar simultaniously
+                    hear both through the headphones
+                    record both
+                        in 2 separate files and 1 combined file
+                    hopefully the mic won't pick up the guitar to much ...
+                        ... if it does, theres mics you can buy for <= $10
+                                https://www.google.com/search?tbm=shop&q=microphone&tbs=vw:l,mr:1,root_cat:530633,cat:234,price:1,ppr_max:90,init_ar:SgVKAwjqAUoHsgQECMmxIA%3D%3D&sa=X&ved=0ahUKEwiV48rbwovjAhVXOs0KHfDFBU4QvSsIrQMoAA&biw=1299&bih=641
+
+
+            i want to be able to say:
+                ns <name (string)> = new song w/ <name>
+                os <name (string)> = open song w/ <name>
+                vs = view songs
+                nt <name(s) (string)> = new track(s) w/ name(s) = <name(s)>
+                dt <name(s) (string)> = delete track w/ name(s) = <name(s)>
+                ti <input_device_id (int)>  = set track input device
+                to <output_device_id (int)> = set track output device (can sounddevice have multiple output devices?)
+                vd = view all i/o devices
+                mt <name(s) (string)> <> = mute track(s) on specified output devices
+                    by default all tracks are played
+                vt <name(s) (string)> --verbose = view track(s) w/ name(s) if no names provoded, default is to view all tracks
+                    name
+                    input_device_id
+                    list of output_device_ids it will play on
+                    list of output_device_ids its muted on
+                    effects put on it
+                    recording(s) start_time, end_time, duration
+                rt (<name (string)> <start_time (int)> <end_time (int)>)(s) = record on track(s) w/ <name(s)>
+                    if no names provided, record on all tracks
+                    start_time default = 0.000
+                    end_time default is infinity
+                    during recording, all tracks will be audible unless they are muted
+
+                help = display all these commands
+
+                it would also be great if all this UI stuff was independent of sounddevice so I could potentially switch to another library later
+
+                a.py shows how to print over the current line
+                    might be useful to make a very simple CLI when running this script
+
+        also make plot be over time
+
+
+    LONG TERM:
+
+
+        set up pedal
+            probably just need to create another InputStream w/ sounddevice with a callback function (does InputStream have a callback function? If not, gotta find some way to access the raw data)
+            In the callback function (or whatever data stream) there will be a boolean thats constantly being updated, find a way to interpret that to set another global boolean to turn distortion on/off
+
+
+        setup 2i2 to work with a mic and a guitar
+            why does it say the 2i2 only has 2 channels? shouldn't it be 4?
+
+            for now just use computer's mic (and create a 2nd sd.Stream)
+
+
+        right now sd.default.latency = 'low' in order to decrease latency.
+
+            found here: https://stackoverflow.com/questions/39990274/too-high-latency-while-trying-to-manipulate-sound-arrays-using-sounddevice-in-py
+
+            it does this by decreasing the length of the numpy array 'indata' (from 512 to 128)
+            which decreases the quality of the sound (idk why)
+
+            I want to find a way to decrease latency without decreasing sound quality as much.
+            Possible solutions are:
+
+                use:
+                    multiprocessing/async-io/etc to do more shit in parallel/concurrently
+                        https://realpython.com/async-io-python/#the-10000-foot-view-of-async-io
+                        https://docs.python.org/3.4/library/multiprocessing.html?highlight=process
+                        https://realpython.com/python-concurrency/
+
+                        i need to find some way to determine whihc parts of the code are currently
+                        taking how long and what is waiting on what to run, ect. before I can have
+                        any idea how to improve it this way
+
+                    research sd.default.latency (maybe theres a way to set it to 'medium low' or something to put it at 256, maybe 256 wont have noticable latency and quality will be pretty good too)
+
+                    maybe it could just do linear interpolation of the 128 indata and put it back to 512 (or 1024 lol XD)
+                        or maybe something smoother than linear interpolation
+
+
+        make basic frequency chart (aka spectrogram)
+            no Key interpretation
+            see spectrogram.py
+
+
+        figure out what 'indata' numpy array represents
+            create a new script thats just an OutputStream (to headphones)
+            create numpy arrays that are a sine wave with specific note's freqency (middle C)
+            plot it over time
+            see if the pitch in the headphones matches the pitch on your guitar (don't forget to tune it)
+            dig into spectogram.py to figure out how it determines frequency value
+
+
+        figure out why right headphone data is just static
+            right now the hack is simply to copy the left-headphone data into the right
+            however from testing it by downloading classical_music.wav files from online
+            and playing it through the headphones and outputting the data to the console,
+            its clear the data should not be the same in both head phones
+
+            perhaps plot the left and right data on the same plot (one line red, one line blue)
+            and see their difference, maybe they're not that different and you just need to
+            randomly change the right one a bit from the left to get rid of that chorus sound
+
+            This is why
+            https://support.focusrite.com/hc/en-gb/articles/206849779-Why-is-my-microphone-guitar-only-on-the-left-
+            https://electronics.stackexchange.com/questions/241610/mono-jack-output-to-stereo-headphones-how-to-send-the-mono-signal-to-both-side
+            https://www.reddit.com/r/Advice/comments/470w29/how_do_i_convert_mono_output_to_stereo_so_that_i/
+                this one recommended this:
+                    https://www.radioshack.com/products/radioshack-1-8-stereo-jack-to-1-4-mono-plug-adapter#.VstnrDu6EAM.mailto
+                but i think thats what I have?
+                    reddit also recommeded a "Y Cord" (aka cheap adapter)
+
+THOUGHTS:
+
+    I'm worried that:
+
+        when I try to create/copy-in effects for this
+        it will increase the latency to much
+            does numpy use C in its backend?
+
+        it won't be able to record 2 inputs and output them simulatniously
+
+    It would be cool to create an effect like the piano pedal where you can hold it down
+    and whatever notes are played when its held down are elongated even when you stop
+    holding the note
+
+    It would be cool if the Program could figure out what time signature you're playing
+    in by simply listening to you play
+        as a musician your time signature is going to fluctuate slightly ...
+        and you could set it to either go with it (because maybe you want the song to speed up or slow down)
+        or you could tell it to stick with whatever time signature it first identified (to keep you the musician on track)
+
+        it would be nice if this was then played back in the headphones or displayed with a blinking light on the pedal or with some display on the computer screen
+
+        this could be useful for
+        having the computer properly time the switch from 1 effect to another (triggered with foot pedal), thus allowing the musician to press the pedal slightly before the
+
+    It would be cool if it could Identify what key you are playing in and
+    display horizontal lines on the screen for each note in the key
+        and when you stop playing the lines go away
+
+        ... having horizontal and vertical lines (for key and time sig. respectivewly) appear on a black screen when you start playing and disappearing when you stop would be dope!!!!
+
+    It would be cool if you could pre-set the algorithm to apply various
+    effects at various points in the song (identified with AI)
+
+    keep messing around with effects
+
+    After not listening to the song for a while (or listening to any music) I can listen to the song again and get a fresh (an clearer) perspective of the song on how to make it better/cleaner/build hype more effectively. I want to be able to add notes at specific points in time on specific tracks. Notes can be text or audio recordings.
