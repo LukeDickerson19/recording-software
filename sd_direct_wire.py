@@ -170,6 +170,8 @@
 
         keep messing around with effects
 
+        After not listening to the song for a while (or listening to any music) I can listen to the song again and get a fresh (an clearer) perspective of the song on how to make it better/cleaner/build hype more effectively. I want to be able to add notes at specific points in time on specific tracks. Notes can be text or audio recordings.
+
 
     '''
 
@@ -276,7 +278,7 @@ def audio_callback(indata, outdata, frames, time, status):
     #         # arctan(left_indata),
     #         f(left_indata),
     #         2, 1)
-    
+
 
     # # bit crushing
     # # "round signal to -1, 0, or 1 (or any combo you want)" (para-phrased)
