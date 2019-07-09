@@ -5,14 +5,25 @@ TO DO:
 
         Figure out how (in pyo) to:
             input from the computer's mic simultanious with input from scarlett
+                dont think this is going to work
+                I probably need to:
+                    buy a cheap mic
+                    connect it to the scarlett
+                    make another input with a different channel
+            listen through 2 pair of headphones
+                same as input in a way
+                in the .out() function, specify channel
+                    does the scarlett have 2 output channels?
+                        it says it does
+                            print('s.getNchnls() = %s' % s.getNchnls())
+                            but playing an input is audible through headphones
+                            regardless of if it its in left or right line input (back of scarlett). Ask Eric about it. 
+                    does the computer speakers?
             input from distorition pedal
                 either
                     create another pyo object of some kind for this
                     or have a separate pyo object for distortion and one for no distortion
                 OOOOORRRR set the distortion value to the value of the pedal!
-            record to an audio file
-                does the recording sound the same as live?
-            listen through 2 pair of headphones
 
 
         find a way to record
@@ -71,7 +82,6 @@ TO DO:
                     might be useful to make a very simple CLI when running this script
 
         also make plot be over time
-
 
     LONG TERM:
 
@@ -182,3 +192,22 @@ THOUGHTS:
     keep messing around with effects
 
     After not listening to the song for a while (or listening to any music) I can listen to the song again and get a fresh (an clearer) perspective of the song on how to make it better/cleaner/build hype more effectively. I want to be able to add notes at specific points in time on specific tracks. Notes can be text or audio recordings.
+
+
+SOURCES:
+
+    sounddevice
+        https://www.swharden.com/wp/2016-07-19-realtime-audio-visualization-in-python/
+
+    pyo
+        http://ajaxsoundstudio.com/pyodoc/api/classes/server.html#server
+        https://github.com/wxWidgets/Phoenix/blob/master/README.rst#prerequisites
+        http://www.matthieuamiguet.ch/blog/diy-guitar-effects-python
+        https://github.com/belangeo/pyo
+
+    other
+        https://github.com/Souloist/audio-effects
+            maybe this will show you how to get pyaudio working
+                maybe pyaudio would have record skips
+        https://github.com/danilobellini/audiolazy
+            maybe this is better also
