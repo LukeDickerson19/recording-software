@@ -1,44 +1,69 @@
-import curses
 import sys
-stdscr = curses.initscr()
-curses.cbreak()
-stdscr.keypad(1)
-
-stdscr.addstr(0,10,"Hit 'q' to quit")
-stdscr.refresh()
-
 import socket
+
+'''
+
+	TODO:
+
+		get input stream up and running ... lol duh
+
+	USEFUL STUFF:
+
+		commands to find ethernet cable identifiers (IP and port):
+
+
+	OTHER POTENTIAL SOURCES:
+
+		https://ubuntuforums.org/showthread.php?t=1619938
+			netstat -n
+
+		https://vitux.com/find-devices-connected-to-your-network-with-nmap/
+			nmap
+
+		https://itsfoss.com/how-to-find-what-devices-are-connected-to-network-in-ubuntu/
+			more nmap!
+
+		https://superuser.com/questions/791182/establishing-direct-ethernet-ethernet-connection-from-pc-to-ethernet-device
+			connect it to your router instead ... hhhmmmmmMMMMMMM??????
+
+		https://stackoverflow.com/questions/6128598/find-ip-address-of-directly-connected-device
+			ping the IP you already have
+
+		http://code.activestate.com/recipes/439093-get-names-of-all-up-network-interfaces-linux-only/
+		https://gist.github.com/pklaus/289646
+			search: daerlnaxe
+			main post could work too!
+		https://pypi.org/project/netifaces/
+			List all Network Interfaces On Computer
+
+	'''
+
+# source:
+# http://www.toptechboy.com/tutorial/python-with-arduino-lesson-16-simple-client-server-configuration-over-ethernet/
 
 # Define who you are talking to (must match ethernet IP and port)
 address = ('192.168.1.66', 1000)
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #Set Up the Socket
-s.settimeout(1) #only wait 1 second for a resonse
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Set Up the Socket
+timeout_wait_time = 0.10 # [seconds]
+s.settimeout(timeout_wait_time) # set how long to wait for a response
 
-
-
-key = ''
-player = 'ayyy'
-x, y = 2, 20
-# https://stackoverflow.com/questions/10693256/how-to-accept-keypress-in-command-line-python
-while key != ord('q'):
-	key = stdscr.getch()
-	stdscr.addstr(y, x, str(key))
-
+while True:
 	try:
 		ret = s.recv(2048) # Read response from footpedal
 	except Exception as e:
 		ret = e
-	stdscr.addstr(y, x, str(ret))
-
-	stdscr.refresh()
-
-curses.endwin()
-
-
-
+	print(ret)
 
 
 sys.exit()
+
+
+
+
+
+
+
+
 
 
 
@@ -52,7 +77,6 @@ sys.exit()
 # ports = glob.glob('/dev/tty[A-Za-z]*')
 # print(ports)
 
-# http://www.toptechboy.com/tutorial/python-with-arduino-lesson-16-simple-client-server-configuration-over-ethernet/
 import sys
 import curses
 import socket
