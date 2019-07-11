@@ -4,6 +4,33 @@ import usb
 
 ''' NOTES:
 
+	pyusb
+	https://stackoverflow.com/questions/26526217/why-cant-i-call-the-pyusb-function-dev-read-repeatedly-without-getting-a-time
+	https://sourceforge.net/p/pyusb/mailman/message/34157331/
+		Ctrl + f: "SUCCESS!!"
+		if dev.is_kernel_driver_active(interface) is True:
+		 # tell the kernel to detach
+		 dev.detach_kernel_driver(interface)
+		 # claim the device
+		 usb.util.claim_interface(dev, interface)
+
+		#if dev is None:
+		# raise ValueError('Device not found')
+
+		dev.set_configuration()
+		print "Connected to " + str(dev)
+
+		... is this better than what i did?
+	https://stackoverflow.com/questions/29291631/pyusb-get-a-continuous-stream-of-data-from-sensor
+		this looks pretty useful
+	the OP used a try/catch to get rid of the TimeOut error
+	the top voted answer shows how to make sense of the output
+	https://github.com/pyusb/pyusb/blob/master/docs/tutorial.rst
+	Read the "Talk to me, honey" section
+	https://www.orangecoat.com/how-to/read-and-decode-data-from-your-mouse-using-this-pyusb-hack
+	This could also show how to interpret the data properly
+
+
 	TODO:
 
 		getting this error
@@ -55,7 +82,10 @@ print(device)
 # must unplug usb and re-plug it for the error
 # usb.core.USBError: [Errno 2] Entity not found
 # to not appear
-device.detach_kernel_driver(INTERFACE_NUMBER)
+if device.is_kernel_driver_active(INTERFACE_NUMBER):
+	device.detach_kernel_driver(INTERFACE_NUMBER) # tell the kernel to detach
+	usb.util.claim_interface(device, INTERFACE_NUMBER) # claim the device
+# device.detach_kernel_driver(INTERFACE_NUMBER)
 
 # config = device.get_active_configuration() 
 # INTERFACE_NUMBER = 1
@@ -81,14 +111,33 @@ device.detach_kernel_driver(INTERFACE_NUMBER)
 # print(interface_number)
 
 # print(device)
+k = 0
 while True:
-	data = device.read(0x82, 16)
+	k += 1
+	print(k)
+	try:
+		# ret = device.ctrl_transfer(0xC0, 0x00, 0, 0, 16, timeout=10)
+		# print(ret)
+		data = device.read(0x82, 16, 10)
+		s_data = ''.join([chr(x) for x in data])
+	except usb.core.USBError as e:
+		data, s_data = None, None
+		if e.args == ('Operation timed out',):
+			continue
 	print(data)
-	i = input()
-	if i == 'q':
-		# this got: usb.core.USBError: [Errno 16] Resource busy
+	print(s_data)
+	
+	if k > 100:
+		# release the device
+		usb.util.release_interface(device, INTERFACE_NUMBER)
+		# reattach the device to the OS kernel
 		device.attach_kernel_driver(INTERFACE_NUMBER)
 		sys.exit()
+	# i = input()
+	# if i == 'q':
+	# 	# this got: usb.core.USBError: [Errno 16] Resource busy
+	# 	device.attach_kernel_driver(INTERFACE_NUMBER)
+	# 	sys.exit()
 sys.exit()
 
 # print(device)
