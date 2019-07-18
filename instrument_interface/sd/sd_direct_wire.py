@@ -68,7 +68,7 @@ plotdata = np.zeros(128)
 
 SAMPLERATE = 44100
 
-RECORDING = True
+RECORDING = False
 
 
 # mapping = [c - 1 for c in CHANNELS]  # Channel numbers start with 1
