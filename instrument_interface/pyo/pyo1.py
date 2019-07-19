@@ -69,12 +69,11 @@ while True:
 				print('\t... file will be saved at: ' + base_filepath + '<filename>')
 				print('\t... type "exit" to discard recording.')
 				user_input3 = input()
-				if user_input3 == 'exit':
-					cmd = ['rm', TMP_FILENAME]
-				else:
-					if not user_input3.endswith('.wav'):
-						user_input3 += '.wav'
+				if user_input3 != 'exit':
+					user_input3 += '.wav' if not user_input3.endswith('.wav') else ''
 					cmd = ['mv', TMP_FILENAME, base_filepath + user_input3]
+					subprocess.run(cmd)
+				cmd = ['rm', TMP_FILENAME]
 				subprocess.run(cmd)
 
 	elif user_input1 == 'q':
