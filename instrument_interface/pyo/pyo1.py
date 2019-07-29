@@ -27,8 +27,8 @@ time.sleep(1) # make sure server is booted
 
 # print('s.getNchnls() = %s' % s.getNchnls())
 a1 = pyo.Input()
-p1 = pyo.Pan(a1).out()
-# d1 = pyo.Disto(p1, drive=0.15).out()
+p1 = pyo.Pan(a1)#.out()
+d1 = pyo.Disto(p1, drive=0.25).out()
 
 # a2 = pyo.Input(chnl=0)
 # p2 = pyo.Pan(a2).out(chnl=1)
