@@ -17,7 +17,7 @@ TO DO:
                         it says it does
                             print('s.getNchnls() = %s' % s.getNchnls())
                             but playing an input is audible through headphones
-                            regardless of if it its in left or right line input (back of scarlett). Ask Eric about it. 
+                            regardless of if it its in left or right line input (back of scarlett). Ask Eric about it.
                     does the computer speakers?
             input from distorition pedal
                 either
@@ -126,6 +126,21 @@ TO DO:
         make basic frequency chart (aka spectrogram)
             no Key interpretation
             see spectrogram.py
+
+            use it to make tab class
+
+            class Tab:
+
+                init()
+
+                write_tab_from_prerecording()
+
+                write_tab_in_realtime(display=True)
+
+                display_tab()
+
+                play_tab_with_prerecording()
+                    have the tab fret numbers change color when its their turn
 
 
         figure out what 'indata' numpy array represents
